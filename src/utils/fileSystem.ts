@@ -21,12 +21,12 @@ I'm Nick, a Cybersecurity student at Northeastern University, Graduating in May 
 
 🎓 B.S. Cybersecurity | Minor: Law & Public Policy | GPA: 3.70 | Dean's List
 
-Passionate about offensive/defensive security, penetration testing, and teaching.
-Love building apps, playing guitar, snowboarding, and ping pong!
+I am passionate about offensive and defensive security, software development, and compliance, with experience in all three.
+I love teaching, building, reading philosophy, playing guitar, snowboarding, and ping pong!
 
 💻 Languages: Java, JavaScript, TypeScript, C, Python, SQL
-🛡️ Security: BurpSuite, MetaSploit, IDA Pro, WireShark, NMap
-🚀 Tech: React, NestJS, NextJS, AWS, Supabase, PostgreSQL
+🛡️ Security: BurpSuite, MetaSploit, IDA Pro, WireShark, NMap, PowerBI, Aravo, Archer GRC
+🚀 Tools/Frameworks: React, NestJS, NextJS, AWS, Supabase, PostgreSQL
 
 🎯 Seeking Summer 2026 & Fall 2026 opportunities!`
           },
@@ -42,14 +42,14 @@ Love building apps, playing guitar, snowboarding, and ping pong!
 
 🛡️ Responsibilities:
 • Audit 17 enterprise cybersecurity policies across 4 SBUs for compliance
-• Evaluate SDLC/DevOps security controls using PowerBI, Aravo, Archer GRC
-• Led Continuous Improvement, developed AI agent for auditing client communications
-• Updated 5+ onboarding IAM procedures
+• Evaluate SDLC/DevOps security controls, and check IAM procedures using PowerBI, Aravo, Archer GRC
+• Led Continuous Improvement, developed an AI agent for auditing client communications
+• Updated 5+ onboarding IAM procedures for future new-hires
 
 🎯 Key Areas: Cybersecurity Policy, Application Security, Change Management, 
 Backup/DR, MFA, Third-Party Vendor Risk, Secrets Management
 
-🛠️ Tools: PowerBI, Aravo, Archer GRC, AWS, Azure, Compliance Frameworks`
+🛠️ Tools: PowerBI, Aravo, Archer GRC, AWS, Azure`
             },
             'Code4Community.txt': {
               name: 'Code4Community.txt',
@@ -120,16 +120,16 @@ Interactive road trip planner with 3D mapping and personalized itineraries.
 🚀 Features:
 • Interactive 3D mapping with Three.js
 • Google Places & Directions API integration
-• User authentication and trip planning
+• User authentication and saved trip planning via Supabase
 • Geospatial data with Leaflet.js/GeoJSON
 
 🛠️ Tech: NextJS, React, TypeScript, Three.js, Leaflet.js, Google APIs, Supabase
-🏆 Won against 100+ contestants at 36-hour hackathon`
+🏆 Won Honorable Mention against 100+ contestants at 36-hour hackathon (and won a mug!)`
             },
             'cipher-encryptor.txt': {
               name: 'cipher-encryptor.txt',
               type: 'file',
-              content: `🔐 Cipher Encryptor - Command-Line Security Tool
+              content: `🔐 Cipher Encryptor - Basic CLI Security Tool
 📅 January 2025 | Python
 
 📖 Description:
@@ -147,7 +147,7 @@ Command-line encryption tool with cryptanalysis capabilities for penetration tes
             'mini-shell.txt': {
               name: 'mini-shell.txt',
               type: 'file',
-              content: `🐚 Mini Shell in C - Systems Programming
+              content: `🐚 Mini Shell in C - Northeastern Systems Project
 📅 October 2024 | C, Linux
 
 📖 Description:

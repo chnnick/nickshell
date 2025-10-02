@@ -25,7 +25,7 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
         {/* Modal Content */}
         <div className="flex-1 overflow-hidden p-4">
           <iframe
-            src="/src/Nick_Chen_Resume.pdf"
+            src="/src/public/Nick_Chen_Resume.pdf"
             className="w-full h-full border-0 rounded"
             title="Nick Chen Resume PDF"
           />

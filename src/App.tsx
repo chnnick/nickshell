@@ -1,6 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
 import { Terminal } from './components/Terminal';
-import { FileSystem } from './utils/fileSystem';
 
 function App() {
   return (

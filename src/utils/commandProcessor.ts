@@ -16,7 +16,7 @@ export class CommandProcessor {
       case 'open':
         return this.openFile(args, currentPath, fileSystem);
       default:
-        return `bash: ${command}: command not found\n\nTry \`help\` to learn how to navigate my site!`;
+        return `bash: ${command}: command not found\n\nTry (or click)\`help\`to learn how to navigate my site!`;
     }
   }
 

@@ -15,8 +15,8 @@ import { ResumeModal } from './ResumeModal';
     const [history, setHistory] = useState<TerminalLine[]>([]);
   const [commandHistory, setCommandHistory] = useState<string[]>([]);
   const [historyIndex, setHistoryIndex] = useState(-1);
-  const [isInitialized, setIsInitialized] = useState(false);
   const [showResumeModal, setShowResumeModal] = useState(false);
+  const welcomeShownRef = useRef(false);
     
     const inputRef = useRef<HTMLInputElement>(null);
     const terminalRef = useRef<HTMLDivElement>(null);
@@ -24,10 +24,22 @@ import { ResumeModal } from './ResumeModal';
     const fileSystem = new FileSystem();
 
     useEffect(() => {
-      if (!isInitialized) {
-        setIsInitialized(true);
+      if (!welcomeShownRef.current) {
+        // Show ASCII art and welcome message
+        const asciiArt = `▖ ▖▘  ▌   ▄▖▌       ▄▖       ▘    ▜ 
+▛▖▌▌▛▘▙▘  ▌ ▛▌█▌▛▌  ▐ █▌▛▘▛▛▌▌▛▌▀▌▐ 
+▌▝▌▌▙▖▛▖  ▙▖▌▌▙▖▌▌  ▐ ▙▖▌ ▌▌▌▌▌▌█▌▐▖
+                                    
+Welcome to Nick Chen's Portfolio Terminal!
+Type (or click) \`help\` to get started and explore my work.`;
+
+        setHistory(prev => [
+          ...prev,
+          { type: 'output', content: asciiArt }
+        ]);
+        welcomeShownRef.current = true;
       }
-    }, [isInitialized]);
+    }, []);
 
     useEffect(() => {
       // Auto-focus input and scroll to bottom
@@ -248,7 +260,6 @@ import { ResumeModal } from './ResumeModal';
               className="flex-1 bg-transparent border-none outline-none text-green-400 font-mono text-sm"
               autoFocus
             />
-            <span className="w-2 h-5 bg-green-400 ml-1 animate-pulse"></span>
           </div>
         </div>
 
