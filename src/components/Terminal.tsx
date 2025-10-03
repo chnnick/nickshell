@@ -26,11 +26,15 @@ import { ResumeModal } from './ResumeModal';
     useEffect(() => {
       if (!welcomeShownRef.current) {
         // Show ASCII art and welcome message
-        const asciiArt = `▖ ▖▘  ▌   ▄▖▌       ▄▖       ▘    ▜ 
-▛▖▌▌▛▘▙▘  ▌ ▛▌█▌▛▌  ▐ █▌▛▘▛▛▌▌▛▌▀▌▐ 
-▌▝▌▌▙▖▛▖  ▙▖▌▌▙▖▌▌  ▐ ▙▖▌ ▌▌▌▌▌▌█▌▐▖
-                                    
-Welcome to Nick Chen's Portfolio Terminal!
+        const asciiArt = `::::    ::: ::::::::::: ::::::::  :::    ::: ::::::::  :::    ::: :::::::::: :::        :::        
+:+:+:   :+:     :+:    :+:    :+: :+:   :+: :+:    :+: :+:    :+: :+:        :+:        :+:        
+:+:+:+  +:+     +:+    +:+        +:+  +:+  +:+        +:+    +:+ +:+        +:+        +:+        
++#+ +:+ +#+     +#+    +#+        +#++:++   +#++:++#++ +#++:++#++ +#++:++#   +#+        +#+        
++#+  +#+#+#     +#+    +#+        +#+  +#+         +#+ +#+    +#+ +#+        +#+        +#+        
+#+#   #+#+#     #+#    #+#    #+# #+#   #+# #+#    #+# #+#    #+# #+#        #+#        #+#        
+###    #### ########### ########  ###    ### ########  ###    ### ########## ########## ########## 
+
+Welcome to Nickshell! My personal website(terminal)!
 Type (or click) \`help\` to get started and explore my work.`;
 
         setHistory(prev => [
@@ -192,26 +196,50 @@ Type (or click) \`help\` to get started and explore my work.`;
     }
   };
 
-    const renderContent = (content: string) => {
-      // Handle clickable commands in output
-      const clickablePattern = /`([^`]+)`/g;
-      const parts = content.split(clickablePattern);
-      
-      return parts.map((part, index) => {
-        if (index % 2 === 1) {
-          // This is a clickable command
-          return (
-            <button
-              key={index}
-              onClick={() => handleClickableCommand(part)}
-              className="text-cyan-400 hover:text-cyan-300 underline hover:bg-gray-800 px-1 rounded transition-colors duration-200"
-            >
-              {part}
-            </button>
-          );
-        }
-        return <span key={index}>{part}</span>;
-      });
+    const renderContent = (content: string, isJSX: boolean = false) => {
+      if (isJSX) {
+        // For JSX content, we need to parse and render HTML/JSX
+        // Handle clickable commands in output
+        const clickablePattern = /`([^`]+)`/g;
+        const parts = content.split(clickablePattern);
+        
+        return parts.map((part, index) => {
+          if (index % 2 === 1) {
+            // This is a clickable command
+            return (
+              <button
+                key={index}
+                onClick={() => handleClickableCommand(part)}
+                className="text-cyan-400 hover:text-cyan-300 underline hover:bg-gray-800 px-1 rounded transition-colors duration-200"
+              >
+                {part}
+              </button>
+            );
+          }
+          // For JSX content, render HTML safely
+          return <span key={index} dangerouslySetInnerHTML={{ __html: part }} />;
+        });
+      } else {
+        // Handle clickable commands in output
+        const clickablePattern = /`([^`]+)`/g;
+        const parts = content.split(clickablePattern);
+        
+        return parts.map((part, index) => {
+          if (index % 2 === 1) {
+            // This is a clickable command
+            return (
+              <button
+                key={index}
+                onClick={() => handleClickableCommand(part)}
+                className="text-cyan-400 hover:text-cyan-300 underline hover:bg-gray-800 px-1 rounded transition-colors duration-200"
+              >
+                {part}
+              </button>
+            );
+          }
+          return <span key={index}>{part}</span>;
+        });
+      }
     };
 
     return (
@@ -238,7 +266,7 @@ Type (or click) \`help\` to get started and explore my work.`;
             }`}>
               {line.type === 'output' ? (
                 <pre className="whitespace-pre-wrap font-mono text-sm leading-relaxed">
-                  {renderContent(line.content)}
+                  {renderContent(line.content, line.content.includes('<img') || line.content.includes('<div') || line.content.includes('<span'))}
                 </pre>
               ) : (
                 <div className="font-mono text-sm">{line.content}</div>

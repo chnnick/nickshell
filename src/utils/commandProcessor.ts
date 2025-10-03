@@ -21,11 +21,9 @@ export class CommandProcessor {
   }
 
   private showHelp(): string {
-    return `📋 Quick Help - Available Commands:
-
-Welcome to Nick's portfolio! This interactive terminal allows you
-to explore my professional experience, projects, and personal information
-using the terminal.
+    return `
+Uh oh... how did you get here? I hope this is just Nick accessing this terminal!
+In any case, here's a list of commands you can use:
 
 AVAILABLE COMMANDS
 📁 Navigation:

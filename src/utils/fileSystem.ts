@@ -2,6 +2,7 @@ export interface FileSystemNode {
   name: string;
   type: 'file' | 'directory' | 'realfile';
   content?: string;
+  jsxContent?: boolean; // Flag to indicate if content should be rendered as JSX
   children?: { [key: string]: FileSystemNode };
 }
 
@@ -16,12 +17,13 @@ export class FileSystem {
         'about-me.txt': {
           name: 'about-me.txt',
           type: 'file',
+          jsxContent: true,
           content: `Hey there! 👋
 I'm Nick, a Cybersecurity student at Northeastern University, Graduating in May 2027!
-
+<img src="/src/public/headshot.png" alt="Nick's Headshot" style="max-width: 200px; border-radius: 10px; margin: 10px 0;" />
 🎓 B.S. Cybersecurity | Minor: Law & Public Policy | GPA: 3.70 | Dean's List
 
-I am passionate about offensive and defensive security, software development, and compliance, with experience in all three.
+I am passionate about offensive and defensive security, software development, and compliance, with experience in all three!
 I love teaching, building, reading philosophy, playing guitar, snowboarding, and ping pong!
 
 💻 Languages: Java, JavaScript, TypeScript, C, Python, SQL
