@@ -20,7 +20,7 @@ export class FileSystem {
           jsxContent: true,
           content: `Hey there! 👋
 I'm Nick, a Cybersecurity student at Northeastern University, Graduating in May 2027!
-<img src="/src/public/headshot.png" alt="Nick's Headshot" style="max-width: 200px; border-radius: 10px; margin: 10px 0;" />
+<img src="/headshot.png" alt="Nick's Headshot" style="max-width: 200px; border-radius: 10px; margin: 10px 0;" />
 🎓 B.S. Cybersecurity | Minor: Law & Public Policy | GPA: 3.70 | Dean's List
 
 I am passionate about offensive and defensive security, software development, and compliance, with experience in all three!
