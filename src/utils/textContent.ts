@@ -53,7 +53,7 @@ I love teaching, building, reading philosophy, playing guitar, snowboarding, and
 export const experienceContent: Record<string, string> = {
   'Liberty_Mutual_Insurance.txt': `Cybersecurity Audit Co-Op @ Liberty Mutual Insurance
 📅 July 2025 - Present | 📍 Boston, MA
-
+<img src="${import.meta.env.BASE_URL}libertylogo.png" alt="Liberty Mutual Insurance Logo" style="max-width: 200px; border-radius: 10px; margin: 10px 0;" />
 🛡️ Responsibilities:
 • Audit 17 enterprise cybersecurity policies across 4 SBUs for compliance
 • Evaluate SDLC/DevOps security controls, and check IAM procedures using PowerBI, Aravo, Archer GRC
@@ -67,7 +67,7 @@ Backup/DR, MFA, Third-Party Vendor Risk, Secrets Management
 
   'Code4Community.txt': `Full Stack Software Engineer @ Code4Community
 📅 May 2025 - Present | 📍 Boston, MA
-
+<img src="${import.meta.env.BASE_URL}c4clogo.jpg" alt="Code4Community Logo" style="max-width: 200px; border-radius: 10px; margin: 10px 0;" />
 🚀 Key Work:
 • Built NestJS/PostgreSQL/TypeORM backend with TypeScript/React frontend
 • Developed recruitment portal for 70+ members across 3+ subteams
@@ -78,7 +78,7 @@ Backup/DR, MFA, Third-Party Vendor Risk, Secrets Management
 
   'FirstByte.txt': `President @ FirstByte
 📅 April 2025 - Present | 📍 Boston, MA
-
+<img src="${import.meta.env.BASE_URL}firstbytelogo.png" alt="FirstByte Logo" style="max-width: 200px; border-radius: 10px; margin: 10px 0;" />
 🚀 Leadership:
 • Lead 5 subteams, partnerships with 2 Boston youth organizations
 • Increased potential partners by 200%, recruited 20+ new members
