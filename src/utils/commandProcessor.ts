@@ -1,4 +1,5 @@
 import { FileSystem } from './fileSystem';
+import { helpText } from './textContent';
 
 export class CommandProcessor {
   executeCommand(command: string, args: string[], currentPath: string, fileSystem: FileSystem): string {
@@ -21,32 +22,7 @@ export class CommandProcessor {
   }
 
   private showHelp(): string {
-    return `
-Uh oh... how did you get here? I hope this is just Nick accessing this terminal!
-In any case, here's a list of commands you can use:
-
-AVAILABLE COMMANDS
-📁 Navigation:
-  \`ls\`        - List files and directories
-  \`cd <dir>\`  - Change directory (try \`cd projects\` or \`cd about-me\`)
-  \`pwd\`       - Show current directory
-  \`cd ..\`     - Go back one directory
-
-📖 Reading Files:
-  \`cat <file>\` - Display file contents
-  \`open <file>\` - Open files 
-
-🧹 Utilities:
-  \`clear\`     - Clear terminal screen
-  \`help\`      - Show this help message
-
-💡 Tips:
-• Try clicking on highlighted \`commands\` in the output!
-• Use Tab for auto-completion
-• Use ↑/↓ for command history
-• Start with \`ls\` to see what's available
-
-Ready to explore? Try: \`ls\` or \`cd about-me\``;
+    return helpText;
   }
 
   private listFiles(args: string[], currentPath: string, fileSystem: FileSystem): string {

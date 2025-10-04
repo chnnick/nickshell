@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { CommandProcessor } from '../utils/commandProcessor';
 import { FileSystem } from '../utils/fileSystem';
 import { ResumeModal } from './ResumeModal';
+import { welcomeMessage } from '../utils/textContent';
 
   interface TerminalLine {
     type: 'command' | 'output' | 'error';
@@ -10,9 +11,9 @@ import { ResumeModal } from './ResumeModal';
   }
 
   export const Terminal: React.FC = () => {
-    const [currentPath, setCurrentPath] = useState('/');
-    const [inputValue, setInputValue] = useState('');
-    const [history, setHistory] = useState<TerminalLine[]>([]);
+  const [currentPath, setCurrentPath] = useState('/');
+  const [inputValue, setInputValue] = useState('');
+  const [history, setHistory] = useState<TerminalLine[]>([]);
   const [commandHistory, setCommandHistory] = useState<string[]>([]);
   const [historyIndex, setHistoryIndex] = useState(-1);
   const [showResumeModal, setShowResumeModal] = useState(false);
@@ -26,20 +27,9 @@ import { ResumeModal } from './ResumeModal';
     useEffect(() => {
       if (!welcomeShownRef.current) {
         // Show ASCII art and welcome message
-        const asciiArt = `::::    ::: ::::::::::: ::::::::  :::    ::: ::::::::  :::    ::: :::::::::: :::        :::        
-:+:+:   :+:     :+:    :+:    :+: :+:   :+: :+:    :+: :+:    :+: :+:        :+:        :+:        
-:+:+:+  +:+     +:+    +:+        +:+  +:+  +:+        +:+    +:+ +:+        +:+        +:+        
-+#+ +:+ +#+     +#+    +#+        +#++:++   +#++:++#++ +#++:++#++ +#++:++#   +#+        +#+        
-+#+  +#+#+#     +#+    +#+        +#+  +#+         +#+ +#+    +#+ +#+        +#+        +#+        
-#+#   #+#+#     #+#    #+#    #+# #+#   #+# #+#    #+# #+#    #+# #+#        #+#        #+#        
-###    #### ########### ########  ###    ### ########  ###    ### ########## ########## ########## 
-
-Welcome to Nickshell! My personal website(terminal)!
-Type (or click) \`help\` to get started and explore my work.`;
-
         setHistory(prev => [
           ...prev,
-          { type: 'output', content: asciiArt }
+          { type: 'output', content: welcomeMessage }
         ]);
         welcomeShownRef.current = true;
       }
