@@ -2,7 +2,7 @@ import { aboutMeContent, experienceContent, projectsContent } from './textConten
 
 export interface FileSystemNode {
   name: string;
-  type: 'file' | 'directory' | 'realfile';
+  type: 'file' | 'directory' | 'realfile' | 'executable';
   content?: string;
   jsxContent?: boolean; // Flag to indicate if content should be rendered as JSX
   children?: { [key: string]: FileSystemNode };
@@ -73,6 +73,11 @@ export class FileSystem {
           name: 'resume.pdf',
           type: 'realfile',
           content: `RESUME HERE`
+        }, 
+        'mystery': {
+          name: 'mystery',
+          type: 'executable',
+          content: `MYSTERY HERE`
         }
         }
       }
@@ -120,6 +125,16 @@ export class FileSystem {
   isFile(path: string): boolean {
     const node = this.getNode(path);
     return node?.type === 'file' || false;
+  }
+
+  isRealFile(path: string): boolean {
+    const node = this.getNode(path);
+    return node?.type === 'realfile' || false;
+  }
+
+  isExecutable(path: string): boolean {
+    const node = this.getNode(path);
+    return node?.type === 'executable' || false;
   }
 
   exists(path: string): boolean {

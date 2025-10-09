@@ -23,6 +23,7 @@ AVAILABLE COMMANDS
 📖 Reading Files:
   \`cat <file>\` - Display file contents
   \`open <file>\` - Open files 
+  \`./<file>\` - Execute a file (try \`./mystery\`)
 
 🧹 Utilities:
   \`clear\`     - Clear terminal screen
@@ -34,7 +35,7 @@ AVAILABLE COMMANDS
 • Use ↑/↓ for command history
 • Start with \`ls\` to see what's available
 
-Ready to explore? Try: \`ls\` or \`cd about-me\``;
+Ready to explore? Try: \`ls\` or \`cat about-me\``;
 
 export const aboutMeContent = `Hey there! 👋
 I'm Nick, a Cybersecurity student at Northeastern University, Graduating in May 2027!
@@ -48,7 +49,9 @@ I love teaching, building, reading philosophy, playing guitar, snowboarding, and
 🛡️ Security: BurpSuite, MetaSploit, IDA Pro, WireShark, NMap, PowerBI, Aravo, Archer GRC
 🚀 Tools/Frameworks: React, NestJS, NextJS, AWS, Supabase, PostgreSQL
 
-🎯 Seeking Summer 2026 & Fall 2026 opportunities!`;
+🎯 Seeking Summer 2026 & Fall 2026 opportunities!
+🔍 Feel free to reach out here!
+<a href="mailto:chen.nich@northeastern.edu" style="text-decoration: none; margin: 0 0px; color: #60a5fa;">📧 Email</a><a href="https://www.linkedin.com/in/nckchen/" style="text-decoration: none; margin: 0 8px; color: #0077b5;">💼 LinkedIn</a><a href="https://github.com/chnnick" style="text-decoration: none; margin: 0 0px; color: #7c3aed;">🐙 GitHub</a>`;
 
 export const experienceContent: Record<string, string> = {
   'Liberty_Mutual_Insurance.txt': `Cybersecurity Audit Co-Op @ Liberty Mutual Insurance

@@ -1,6 +1,13 @@
 import { FileSystem } from './fileSystem';
 import { helpText } from './textContent';
 
+// Registry for special executable files
+const executableRegistry: Record<string, string> = {
+  'mystery': 'OPEN_GALLERY:gallery',
+  // 'calculator': 'OPEN_CALCULATOR:calc',
+  // 'weather': 'OPEN_WEATHER:weather',
+};
+
 export class CommandProcessor {
   executeCommand(command: string, args: string[], currentPath: string, fileSystem: FileSystem): string {
     switch (command.toLowerCase()) {
@@ -17,7 +24,12 @@ export class CommandProcessor {
       case 'open':
         return this.openFile(args, currentPath, fileSystem);
       default:
-        return `bash: ${command}: command not found\n\nTry (or click)\`help\`to learn how to navigate my site!`;
+        // Check if it's a ./ command (executable)
+        if (command.startsWith('./')) {
+          const executableName = command.substring(2);
+          return this.openExecutable([executableName], currentPath, fileSystem);
+        }
+        return `bash: ${command}: command not found\n\nTry (or click) \`help\` to learn how to navigate!`;
     }
   }
 
@@ -49,8 +61,10 @@ export class CommandProcessor {
         return `📁 ${file}/  (try: \`cd ${file}\`)`;
       } else if (fileSystem.isFile(fullPath))   {
         return `📄 ${file}  (try: \`cat ${file}\`)`;
+      } else if (fileSystem.isExecutable(fullPath)) {
+        return `👾 ${file}  (try: \`./${file}\`)`;
       } else {
-        return `📄 ${file}  (try: \`open ${file}\`)`;
+        return `💼 ${file}  (try: \`open ${file}\`)`;
       }
     }).join('\n');
 
@@ -123,6 +137,37 @@ export class CommandProcessor {
     const content = fileSystem.readFile(targetPath);
     if (content === null) {
       return `open: ${args[0]}: Permission denied`;
+    }
+
+    return content;
+  }
+
+  private openExecutable(args: string[], currentPath: string, fileSystem: FileSystem): string {
+    if (args.length === 0) {
+      return './: is a directory\nTry \`./<filename>\` or \`ls\` to see available files';
+    }
+
+    const executableName = args[0];
+    
+    // Check if it's a special executable in the registry
+    if (executableRegistry[executableName]) {
+      return executableRegistry[executableName];
+    }
+
+    const targetPath = fileSystem.normalizePath(currentPath, args[0]);
+    
+    if (!fileSystem.exists(targetPath)) {
+      return `./: ${executableName}: No such file or directory`;
+    }
+
+    if (fileSystem.isDirectory(targetPath)) {
+      return `./: ${executableName}: Is a directory`;
+    }
+
+    // For regular files, just read the content
+    const content = fileSystem.readFile(targetPath);
+    if (content === null) {
+      return `./: ${executableName}: Permission denied`;
     }
 
     return content;

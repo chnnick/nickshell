@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { CommandProcessor } from '../utils/commandProcessor';
 import { FileSystem } from '../utils/fileSystem';
 import { ResumeModal } from './ResumeModal';
+import { GalleryModal } from './GalleryModal';
 import { welcomeMessage } from '../utils/textContent';
 
   interface TerminalLine {
@@ -17,6 +18,7 @@ import { welcomeMessage } from '../utils/textContent';
   const [commandHistory, setCommandHistory] = useState<string[]>([]);
   const [historyIndex, setHistoryIndex] = useState(-1);
   const [showResumeModal, setShowResumeModal] = useState(false);
+  const [showGalleryModal, setShowGalleryModal] = useState(false);
   const welcomeShownRef = useRef(false);
     
     const inputRef = useRef<HTMLInputElement>(null);
@@ -95,12 +97,22 @@ import { welcomeMessage } from '../utils/textContent';
         }
       } else {
         const result = commandProcessor.executeCommand(cmd, args, currentPath, fileSystem);
-        const type = result.includes('command not found') || result.includes('No such file') ? 'error' : 'output';
         
-        setHistory(prev => [
-          ...prev,
-          { type, content: result }
-        ]);
+        if (result.startsWith('OPEN_GALLERY:')) {
+          // Special handling for gallery - show modal
+          setShowGalleryModal(true);
+          setHistory(prev => [
+            ...prev,
+            { type: 'output', content: 'Executing...' }
+          ]);
+        } else {
+          const type = result.includes('command not found') || result.includes('No such file') ? 'error' : 'output';
+          
+          setHistory(prev => [
+            ...prev,
+            { type, content: result }
+          ]);
+        }
       }
 
       // Update command history
@@ -256,7 +268,7 @@ import { welcomeMessage } from '../utils/textContent';
             }`}>
               {line.type === 'output' ? (
                 <pre className="whitespace-pre-wrap font-mono text-sm leading-relaxed">
-                  {renderContent(line.content, line.content.includes('<img') || line.content.includes('<div') || line.content.includes('<span'))}
+                  {renderContent(line.content, line.content.includes('<img') || line.content.includes('<div') || line.content.includes('<span') || line.content.includes('`'))}
                 </pre>
               ) : (
                 <div className="font-mono text-sm">{line.content}</div>
@@ -290,6 +302,12 @@ import { welcomeMessage } from '../utils/textContent';
         <ResumeModal
           isOpen={showResumeModal}
           onClose={() => setShowResumeModal(false)}
+        />
+        
+        {/* Gallery Modal */}
+        <GalleryModal
+          isOpen={showGalleryModal}
+          onClose={() => setShowGalleryModal(false)}
         />
       </div>
     );
