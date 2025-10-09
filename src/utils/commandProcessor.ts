@@ -29,7 +29,7 @@ export class CommandProcessor {
           const executableName = command.substring(2);
           return this.openExecutable([executableName], currentPath, fileSystem);
         }
-        return `bash: ${command}: command not found\n\nTry (or click) \`help\` to learn how to navigate!`;
+        return `bash: ${command}: command not found\n\nTry typing \`help\` to learn how to navigate!`;
     }
   }
 
