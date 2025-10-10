@@ -35,7 +35,7 @@ AVAILABLE COMMANDS
 • Use ↑/↓ for command history
 • Start with \`ls\` to see what's available
 
-Ready to explore? Try: \`ls\` or \`cat about-me\``;
+Ready to explore? Try: \`ls\` or \`cat about-me.txt\``;
 
 export const aboutMeContent = `Hey there! 👋
 I'm Nick, a Cybersecurity student at Northeastern University, Graduating in May 2027!
