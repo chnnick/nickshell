@@ -97,7 +97,7 @@ Backup/DR, MFA, Third-Party Vendor Risk, Secrets Management
 
 export const projectsContent = {
   'dream-store.txt': `💈 DreamStore - Online Barber Store/Gallery
-📅 May 2025 | Full-stack E-commerce Platform
+📅 May 2025 | Full-stack E-commerce Platform | 🔗 [GitHub](https://github.com/chnnick/dreamstore)
 
 📖 Description:
 E-commerce platform with customer store and secure admin portal for barber operations.
@@ -112,7 +112,7 @@ E-commerce platform with customer store and secure admin portal for barber opera
 🛠️ Tech: React, TypeScript, NextJS, Supabase, Stripe API, Zustand`,
 
   'throwapin.txt': `📍 ThrowAPin - Digital Road Trip Planner
-📅 February 2025 | 🔗 throwapin.com
+📅 February 2025 | 🔗 [throwapin.com](https://throwapin.com) | 🔗 [GitHub](https://github.com/NoHaxsJustAsian/throw-a-pin)
 🏆 Honorable Mention for Best Overall Project at HackBeanPot
 
 📖 Description:
@@ -128,7 +128,7 @@ Interactive road trip planner with 3D mapping and personalized itineraries.
 🏆 Won Honorable Mention against 100+ contestants at 36-hour hackathon (and won a mug!)`,
 
   'cipher-encryptor.txt': `🔐 Cipher Encryptor - Basic CLI Security Tool
-📅 January 2025 | Python
+📅 January 2025 | Python | 🔗 [GitHub](https://github.com/chnnick/cipher-maker)
 
 📖 Description:
 Command-line encryption tool with cryptanalysis capabilities for penetration testing.
@@ -156,6 +156,25 @@ Fully functional Linux shell with advanced process management and I/O capabiliti
 • Concurrent command execution
 
 🛠️ Tech: C, Linux System Calls (fork, exec, pipe, dup2)
-📚 Skills: Process management, IPC, memory management, system programming`
+📚 Skills: Process management, memory management, system programming`, 
+
+'scrambler.txt': `🔒 Scrambler - CSV/Excel Anonymization Tool
+📅 October 2025 | Python, pandas, OpenPyXL, Faker, Colorama | 🔗 [GitHub](https://github.com/chnnick/scrambler)
+
+📖 Description:
+A Python tool for anonymizing sensitive data in CSV and Excel files while preserving data structure and relationships. Perfect for creating test datasets, protecting privacy, and preparing data for sharing.
+
+🚀 Features:
+• Anonymizes sensitive data across CSV/Excel and clipboard input while preserving data relationships via pandas
+• Implemented auto-detection for 10+ sensitive data types (SSN, PII, financial) using regex patterns and Faker library
+• User-first CLI tool with Colorama styling, seed reproducibility, JSON rule usage, OpenPyXL excel sheet building
+• Smart data detection for email, phone, name, SSN, address, date, ID, and numeric data
+• Consistent mapping with seed-based reproducible results
+• Clipboard support for direct Excel/Google Sheets processing
+• Custom JSON rules for override automatic detection
+
+🛠️ Tech: Python, pandas, Faker, OpenPyXL, Colorama, regex patterns
+📚 Skills: Data anonymization, privacy protection, CLI development, data processing`, 
+
 };
 
