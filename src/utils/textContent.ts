@@ -45,9 +45,9 @@ I'm Nick, a Cybersecurity student at Northeastern University, Graduating in May 
 I am passionate about offensive and defensive security, software development, and compliance, with experience in all three!
 I love teaching, building, reading philosophy, playing guitar, snowboarding, and ping pong!
 
-💻 Languages: Java, JavaScript, TypeScript, C, Python, SQL
-🛡️ Security: BurpSuite, MetaSploit, IDA Pro, WireShark, NMap, PowerBI, Aravo, Archer GRC
-🚀 Tools/Frameworks: React, NestJS, NextJS, AWS, Supabase, PostgreSQL
+💻 Languages: Java, JavaScript, TypeScript, C, Python, SQL, Go, Swift
+🛡️ Security: BurpSuite, MetaSploit, IDA Pro, WireShark, NMap, PowerBI, Splunk, Aravo, Archer GRC
+🚀 Tools/Frameworks: React, NestJS, NextJS, AWS, Supabase, PostgreSQL, MongoDB
 
 🎯 Seeking Summer 2026 & Fall 2026 opportunities!
 🔍 Feel free to reach out here!
