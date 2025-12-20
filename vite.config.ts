@@ -8,4 +8,5 @@ export default defineConfig({
   optimizeDeps: {
     exclude: ['lucide-react'],
   },
+  publicDir: 'public'  // Vite will copy everything from public/ to dist/
 });
