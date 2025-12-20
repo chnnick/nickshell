@@ -55,12 +55,12 @@ I love teaching, building, reading philosophy, playing guitar, snowboarding, and
 
 export const experienceContent: Record<string, string> = {
   'Liberty_Mutual_Insurance.txt': `Cybersecurity Audit Co-Op @ Liberty Mutual Insurance
-📅 July 2025 - Present | 📍 Boston, MA
+📅 July 2025 - Dec 2025 | 📍 Boston, MA
 <img src="${import.meta.env.BASE_URL}libertylogo.png" alt="Liberty Mutual Insurance Logo" style="max-width: 200px; border-radius: 10px; margin: 10px 0;" />
 🛡️ Responsibilities:
 • Audit 17 enterprise cybersecurity policies across 4 SBUs for compliance
 • Evaluate SDLC/DevOps security controls, and check IAM procedures using PowerBI, Aravo, Archer GRC
-• Led Continuous Improvement, developed an AI agent for auditing client communications
+• Led Continuous Improvement initiatives, developed multiple AI agents for enhancing audit efficiency
 • Updated 5+ onboarding IAM procedures for future new-hires
 
 🎯 Key Areas: Cybersecurity Policy, Application Security, Change Management, 

@@ -66,6 +66,11 @@ export class FileSystem {
               name: 'mini-shell.txt',
               type: 'file',
               content: projectsContent['mini-shell.txt']
+            },
+            'scrambler.txt': {
+              name: 'scrambler.txt',
+              type: 'file',
+              content: projectsContent['scrambler.txt']
             }
           }
         },
