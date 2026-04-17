@@ -268,7 +268,7 @@ import { welcomeMessage } from '../utils/textContent';
             }`}>
               {line.type === 'output' ? (
                 <pre className="whitespace-pre-wrap font-mono text-sm leading-relaxed">
-                  {renderContent(line.content, line.content.includes('<img') || line.content.includes('<div') || line.content.includes('<span') || line.content.includes('`'))}
+                  {renderContent(line.content, line.content.includes('<img') || line.content.includes('<div') || line.content.includes('<span') || line.content.includes('<a') || line.content.includes('<u') || line.content.includes('`'))}
                 </pre>
               ) : (
                 <div className="font-mono text-sm">{line.content}</div>

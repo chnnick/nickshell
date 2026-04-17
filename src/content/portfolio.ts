@@ -59,7 +59,7 @@ export const projects: PortfolioEntry[] = [
   {
     filename: 'dream-store.txt',
     content: `💈 DreamStore - Online Barber Store/Gallery
-📅 May 2025 | Full-stack E-commerce Platform | 🔗 <a href="https://github.com/chnnick/dreamstore">GitHub</a>
+📅 May 2025 | Full-stack E-commerce Platform | 🔗 <a href="https://github.com/chnnick/dreamstore"><u>GitHub</u></a>
 
 📖 Description:
 E-commerce platform with customer store and secure admin portal for barber operations.
@@ -76,7 +76,7 @@ E-commerce platform with customer store and secure admin portal for barber opera
   {
     filename: 'throwapin.txt',
     content: `📍 ThrowAPin - Digital Road Trip Planner
-📅 February 2025 | 🔗 <a href="https://throwapin.com">throwapin.com</a> | 🔗 <a href="https://github.com/NoHaxsJustAsian/throw-a-pin">GitHub</a>
+📅 February 2025 | 🔗 <a href="https://throwapin.com"><u>throwapin.com</u></a> | 🔗 <a href="https://github.com/NoHaxsJustAsian/throw-a-pin"><u>GitHub</u></a>
 🏆 Honorable Mention for Best Overall Project at HackBeanPot
 
 📖 Description:
@@ -94,7 +94,7 @@ Interactive road trip planner with 3D mapping and personalized itineraries.
   {
     filename: 'cipher-encryptor.txt',
     content: `🔐 Cipher Encryptor - Basic CLI Security Tool
-📅 January 2025 | Python | 🔗 <a href="https://github.com/chnnick/cipher-maker">GitHub</a>
+📅 January 2025 | Python | 🔗 <a href="https://github.com/chnnick/cipher-maker"><u>GitHub</u></a>
 
 📖 Description:
 Command-line encryption tool with cryptanalysis capabilities for penetration testing.
