@@ -1,4 +1,5 @@
-import { aboutMeContent, experienceContent, projectsContent } from './textContent';
+import { experiences, projects } from '../content/portfolio';
+import { aboutMeContent } from './textContent';
 
 export interface FileSystemNode {
   name: string;
@@ -7,6 +8,25 @@ export interface FileSystemNode {
   jsxContent?: boolean; // Flag to indicate if content should be rendered as JSX
   children?: { [key: string]: FileSystemNode };
 }
+
+interface FileContent {
+  name: string;
+  type: 'file';
+  content: string;
+}
+
+const createFileNodes = (entries: { filename: string; content: string }[]): Record<string, FileContent> =>
+  entries.reduce<Record<string, FileContent>>((acc, entry) => {
+    acc[entry.filename] = {
+      name: entry.filename,
+      type: 'file',
+      content: entry.content
+    };
+    return acc;
+  }, {});
+
+const experienceFiles = createFileNodes(experiences);
+const projectFiles = createFileNodes(projects);
 
 export class FileSystem {
   private root: FileSystemNode;
@@ -26,52 +46,14 @@ export class FileSystem {
           name: 'experience',
           type: 'directory',
           children: {
-            'Liberty_Mutual_Insurance.txt': {
-              name: 'Liberty_Mutual_Insurance.txt',
-              type: 'file',
-              content: experienceContent['Liberty_Mutual_Insurance.txt']
-            },
-            'Code4Community.txt': {
-              name: 'Code4Community.txt',
-              type: 'file',
-              content: experienceContent['Code4Community.txt']
-            },
-            'FirstByte.txt': {
-              name: 'FirstByte.txt',
-              type: 'file',
-              content: experienceContent['FirstByte.txt']
-            }
+            ...experienceFiles
           }
         },
         'projects': {
           name: 'projects',
           type: 'directory',
           children: {
-            'dream-store.txt': {
-              name: 'dream-store.txt',
-              type: 'file',
-              content: projectsContent['dream-store.txt']
-            },
-            'throwapin.txt': {
-              name: 'throwapin.txt',
-              type: 'file',
-              content: projectsContent['throwapin.txt']
-            },
-            'cipher-encryptor.txt': {
-              name: 'cipher-encryptor.txt',
-              type: 'file',
-              content: projectsContent['cipher-encryptor.txt']
-            },
-            'mini-shell.txt': {
-              name: 'mini-shell.txt',
-              type: 'file',
-              content: projectsContent['mini-shell.txt']
-            },
-            'scrambler.txt': {
-              name: 'scrambler.txt',
-              type: 'file',
-              content: projectsContent['scrambler.txt']
-            }
+            ...projectFiles
           }
         },
         'resume.pdf': {
