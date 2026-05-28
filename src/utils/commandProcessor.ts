@@ -92,7 +92,7 @@ export class CommandProcessor {
 
   private readFile(args: string[], currentPath: string, fileSystem: FileSystem): string {
     if (args.length === 0) {
-      return 'cat: missing file operand\nTry \`cat <filename>\` or \`ls\` to see available files';
+      return 'cat: missing file operand\nTry `cat <filename>` or `ls` to see available files';
     }
 
     const targetPath = fileSystem.normalizePath(currentPath, args[0]);
@@ -115,7 +115,7 @@ export class CommandProcessor {
 
   private openFile(args: string[], currentPath: string, fileSystem: FileSystem): string {
     if (args.length === 0) {
-      return 'open: missing file operand\nTry \`open <filename>\` or \`ls\` to see available files';
+      return 'open: missing file operand\nTry `open <filename>` or `ls` to see available files';
     }
 
     const targetPath = fileSystem.normalizePath(currentPath, args[0]);
@@ -144,7 +144,7 @@ export class CommandProcessor {
 
   private openExecutable(args: string[], currentPath: string, fileSystem: FileSystem): string {
     if (args.length === 0) {
-      return './: is a directory\nTry \`./<filename>\` or \`ls\` to see available files';
+      return './: is a directory\nTry `./<filename>` or `ls` to see available files';
     }
 
     const executableName = args[0];
