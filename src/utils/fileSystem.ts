@@ -1,79 +1,22 @@
-import {
-  about,
-  experiences,
-  projects,
-  experienceFilename,
-  projectFilename,
-  aboutToText,
-  experienceToText,
-  projectToText,
-} from '../content';
+import { buildFsChildren } from '../sections/derive';
+import type { AppId } from '../sections/view';
 
 export interface FileSystemNode {
   name: string;
   type: 'file' | 'directory' | 'realfile' | 'executable';
   content?: string;
   children?: { [key: string]: FileSystemNode };
+  /** For realfile/executable nodes: the app/modal this node launches. */
+  app?: AppId;
+  /** For realfile/executable nodes: terminal lines shown before launch. */
+  runMessage?: string[];
 }
 
-const buildRoot = (): FileSystemNode => {
-  const experienceChildren: Record<string, FileSystemNode> = {};
-  for (const exp of experiences) {
-    const filename = experienceFilename(exp.id);
-    experienceChildren[filename] = {
-      name: filename,
-      type: 'file',
-      content: experienceToText(exp),
-    };
-  }
-
-  const projectChildren: Record<string, FileSystemNode> = {};
-  for (const p of projects) {
-    const filename = projectFilename(p.id);
-    projectChildren[filename] = {
-      name: filename,
-      type: 'file',
-      content: projectToText(p),
-    };
-  }
-
-  return {
-    name: '/',
-    type: 'directory',
-    children: {
-      'about-me.txt': {
-        name: 'about-me.txt',
-        type: 'file',
-        content: aboutToText(about),
-      },
-      experience: {
-        name: 'experience',
-        type: 'directory',
-        children: experienceChildren,
-      },
-      projects: {
-        name: 'projects',
-        type: 'directory',
-        children: projectChildren,
-      },
-      'resume.pdf': {
-        name: 'resume.pdf',
-        type: 'realfile',
-        content: 'RESUME HERE',
-      },
-      contact: {
-        name: 'contact',
-        type: 'file',
-        content: 'Run `cat contact` to view contact info, or click the sidebar to open the contact page.',
-      },
-      mystery: {
-        name: 'mystery',
-        type: 'executable',
-        content: 'MYSTERY HERE',
-      },
-    },
-  };
-};
+const buildRoot = (): FileSystemNode => ({
+  name: '/',
+  type: 'directory',
+  children: buildFsChildren(),
+});
 
 export class FileSystem {
   private root: FileSystemNode;
@@ -124,11 +67,6 @@ export class FileSystem {
     return node?.type === 'file' || false;
   }
 
-  isRealFile(path: string): boolean {
-    const node = this.getNode(path);
-    return node?.type === 'realfile' || false;
-  }
-
   isExecutable(path: string): boolean {
     const node = this.getNode(path);
     return node?.type === 'executable' || false;
@@ -139,6 +77,10 @@ export class FileSystem {
   }
 
   normalizePath(currentPath: string, targetPath: string): string {
+    if (targetPath === '~' || targetPath === '~/') {
+      return '/';
+    }
+
     if (targetPath.startsWith('/')) {
       return targetPath === '/' ? '/' : targetPath;
     }

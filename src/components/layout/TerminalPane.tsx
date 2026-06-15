@@ -1,9 +1,42 @@
 import React, { useEffect, useImperativeHandle, useRef, forwardRef } from 'react';
+import { type OutputSegment, promptSegments } from '../../sections/derive';
+import type { Accent } from '../../sections/manifest';
 
 export interface TerminalLine {
   type: 'command' | 'output' | 'error';
-  content: string;
+  content: string | OutputSegment[];
 }
+
+// Mirrors the old sidebar's per-section palette so the terminal keeps the same
+// color scheme.
+const accentClass: Record<Accent, string> = {
+  green: 'text-green-300',
+  cyan: 'text-cyan-300',
+  yellow: 'text-yellow-300',
+  magenta: 'text-fuchsia-300',
+};
+
+const renderSegments = (segments: OutputSegment[], onClickable: (cmd: string) => void) =>
+  segments.map((seg, i) => {
+    const color = seg.accent ? accentClass[seg.accent] : seg.muted ? 'text-gray-500' : undefined;
+    if (seg.command) {
+      const cmd = seg.command;
+      return (
+        <button
+          key={i}
+          onClick={() => onClickable(cmd)}
+          className={`${color ?? 'text-cyan-400'} underline hover:bg-gray-800/60 rounded transition-colors`}
+        >
+          {seg.text}
+        </button>
+      );
+    }
+    return (
+      <span key={i} className={color}>
+        {seg.text}
+      </span>
+    );
+  });
 
 export interface TerminalPaneHandle {
   focus: () => void;
@@ -69,7 +102,7 @@ export const TerminalPane = forwardRef<TerminalPaneHandle, Props>(function Termi
     }
   }, [history]);
 
-  const prompt = `chnnick@portfolio:${cwd === '/' ? '~' : cwd}$`;
+  const promptStr = `chnnick@portfolio:${cwd === '/' ? '~' : cwd}$`;
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
@@ -97,7 +130,7 @@ export const TerminalPane = forwardRef<TerminalPaneHandle, Props>(function Termi
           <span className="w-2 h-2 rounded-full bg-yellow-500/80" />
           <span className="w-2 h-2 rounded-full bg-green-500/80" />
         </span>
-        <span>terminal — {prompt}</span>
+        <span>terminal — {promptStr}</span>
       </div>
 
       <div
@@ -117,13 +150,15 @@ export const TerminalPane = forwardRef<TerminalPaneHandle, Props>(function Termi
             }
           >
             <pre className="whitespace-pre-wrap font-mono text-sm leading-relaxed">
-              {renderContent(line.content, onClickableCommand)}
+              {typeof line.content === 'string'
+                ? renderContent(line.content, onClickableCommand)
+                : renderSegments(line.content, onClickableCommand)}
             </pre>
           </div>
         ))}
 
         <div className="flex items-center text-white">
-          <span className="mr-2">{prompt}</span>
+          <span className="mr-2">{renderSegments(promptSegments(cwd), onClickableCommand)}</span>
           <input
             ref={inputRef}
             type="text"

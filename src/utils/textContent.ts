@@ -7,7 +7,7 @@ export const welcomeMessage = `::::    ::: ::::::::::: ::::::::  :::    ::: ::::
 ###    #### ########### ########  ###    ### ########  ###    ### ########## ########## ##########
 
 Welcome to Nickshell! My personal website(terminal)!
-Type (or click) \`help\` to get started, or use the sidebar on the left.`;
+Type (or click) \`help\` to get started, or run \`ls\` to look around.`;
 
 export const helpText = `
 AVAILABLE COMMANDS
@@ -27,7 +27,7 @@ Utilities:
   \`help\`      - Show this help message
 
 Tips:
-- Click items in the sidebar to navigate; the terminal will log the command.
+- Click any entry in \`ls\` output to run the matching command.
 - Click highlighted \`commands\` in the output, or type them yourself.
 - Tab auto-completes; ArrowUp/Down cycles history.
 - Start with \`ls\` to see what's available.
