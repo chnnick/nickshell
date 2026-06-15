@@ -1,175 +1,191 @@
 import { FileSystem } from './fileSystem';
 import { helpText } from './textContent';
+import { type OutputSegment, styleForPath } from '../sections/derive';
+import type { AppAction } from '../sections/view';
 
-// Registry for special executable files
-const executableRegistry: Record<string, string> = {
-  'mystery': 'OPEN_GALLERY:gallery',
-  // 'calculator': 'OPEN_CALCULATOR:calc',
-  // 'weather': 'OPEN_WEATHER:weather',
-};
+/**
+ * The typed outcome of running a command. Replaces the old magic-string
+ * sentinels (OPEN_PDF:/OPEN_GALLERY:) and the "Changed to: <path>" parsing.
+ *
+ * `text` may be a plain string or a list of styled segments (used by `ls` to
+ * color each entry by its manifest accent).
+ */
+export type CommandResult =
+  | { kind: 'text'; text: string | OutputSegment[]; isError?: boolean }
+  | { kind: 'cd'; path: string }
+  | { kind: 'action'; action: AppAction };
+
+const text = (value: string): CommandResult => ({ kind: 'text', text: value });
+const error = (value: string): CommandResult => ({ kind: 'text', text: value, isError: true });
 
 export class CommandProcessor {
-  executeCommand(command: string, args: string[], currentPath: string, fileSystem: FileSystem): string {
+  executeCommand(
+    command: string,
+    args: string[],
+    currentPath: string,
+    fileSystem: FileSystem,
+  ): CommandResult {
     switch (command.toLowerCase()) {
       case 'help':
-        return this.showHelp();
+        return text(helpText);
       case 'ls':
         return this.listFiles(args, currentPath, fileSystem);
       case 'cd':
         return this.changeDirectory(args, currentPath, fileSystem);
       case 'pwd':
-        return currentPath === '/' ? '/' : currentPath;
+        return text(currentPath === '/' ? '/' : currentPath);
       case 'cat':
         return this.readFile(args, currentPath, fileSystem);
       case 'open':
         return this.openFile(args, currentPath, fileSystem);
       default:
-        // Check if it's a ./ command (executable)
         if (command.startsWith('./')) {
-          const executableName = command.substring(2);
-          return this.openExecutable([executableName], currentPath, fileSystem);
+          return this.openExecutable(command.substring(2), fileSystem);
         }
-        return `bash: ${command}: command not found\n\nTry typing \`help\` to learn how to navigate!`;
+        return error(
+          `bash: ${command}: command not found\n\nTry typing \`help\` to learn how to navigate!`,
+        );
     }
   }
 
-  private showHelp(): string {
-    return helpText;
-  }
-
-  private listFiles(args: string[], currentPath: string, fileSystem: FileSystem): string {
+  private listFiles(args: string[], currentPath: string, fileSystem: FileSystem): CommandResult {
     const targetPath = args.length > 0 ? fileSystem.normalizePath(currentPath, args[0]) : currentPath;
-    
+
     if (!fileSystem.exists(targetPath)) {
-      return `ls: cannot access '${args[0]}': No such file or directory`;
+      return error(`ls: cannot access '${args[0]}': No such file or directory`);
     }
 
     if (!fileSystem.isDirectory(targetPath)) {
-      return args[0]; // If it's a file, just return the filename
+      return text(args[0]); // If it's a file, just return the filename
     }
 
     const files = fileSystem.listDirectory(targetPath);
-    
+
     if (files.length === 0) {
-      return 'Directory is empty';
+      return text('Directory is empty');
     }
 
-    // Add clickable navigation for directories and files
-    const output = files.map(file => {
-      const fullPath = targetPath === '/' ? `/${file}` : `${targetPath}/${file}`;
-      if (fileSystem.isDirectory(fullPath)) {
-        return `📁 ${file}/  (try: \`cd ${file}\`)`;
-      } else if (fileSystem.isFile(fullPath))   {
-        return `📄 ${file}  (try: \`cat ${file}\`)`;
-      } else if (fileSystem.isExecutable(fullPath)) {
-        return `👾 ${file}  (try: \`./${file}\`)`;
-      } else {
-        return `💼 ${file}  (try: \`open ${file}\`)`;
-      }
-    }).join('\n');
-
     const pathDisplay = targetPath === '/' ? '~' : targetPath;
-    return `Contents of ${pathDisplay}:\n\n${output}\n\n💡 Click on any command above or type it manually!`;
+    const segments: OutputSegment[] = [{ text: `Contents of ${pathDisplay}:\n\n`, muted: true }];
+
+    for (const file of files) {
+      const fullPath = targetPath === '/' ? `/${file}` : `${targetPath}/${file}`;
+      const node = fileSystem.getNode(fullPath);
+      const { accent, glyph } = styleForPath(fullPath);
+      const isDir = node?.type === 'directory';
+      const command = isDir
+        ? `cd ${file}`
+        : node?.type === 'executable'
+          ? `./${file}`
+          : node?.app
+            ? `open ${file}`
+            : `cat ${file}`;
+
+      segments.push(
+        { text: '  ' },
+        { text: `${glyph} `, muted: true },
+        { text: isDir ? `${file}/` : file, accent, command },
+        { text: '\n' },
+      );
+    }
+
+    segments.push({ text: '\nClick an entry, or type a command.', muted: true });
+    return { kind: 'text', text: segments };
   }
 
-  private changeDirectory(args: string[], currentPath: string, fileSystem: FileSystem): string {
+  private changeDirectory(args: string[], currentPath: string, fileSystem: FileSystem): CommandResult {
     if (args.length === 0) {
-      return 'Changed to: /';
+      return { kind: 'cd', path: '/' };
     }
 
     const targetPath = fileSystem.normalizePath(currentPath, args[0]);
-    
+
     if (!fileSystem.exists(targetPath)) {
-      return `cd: ${args[0]}: No such file or directory`;
+      return error(`cd: ${args[0]}: No such file or directory`);
     }
 
     if (!fileSystem.isDirectory(targetPath)) {
-      return `cd: ${args[0]}: Not a directory`;
+      return error(`cd: ${args[0]}: Not a directory`);
     }
 
-    return `Changed to: ${targetPath}`;
+    return { kind: 'cd', path: targetPath };
   }
 
-  private readFile(args: string[], currentPath: string, fileSystem: FileSystem): string {
+  private readFile(args: string[], currentPath: string, fileSystem: FileSystem): CommandResult {
     if (args.length === 0) {
-      return 'cat: missing file operand\nTry \`cat <filename>\` or \`ls\` to see available files';
+      return error('cat: missing file operand\nTry `cat <filename>` or `ls` to see available files');
     }
 
     const targetPath = fileSystem.normalizePath(currentPath, args[0]);
-    
+
     if (!fileSystem.exists(targetPath)) {
-      return `cat: ${args[0]}: No such file or directory`;
+      return error(`cat: ${args[0]}: No such file or directory`);
     }
 
     if (fileSystem.isDirectory(targetPath)) {
-      return `cat: ${args[0]}: Is a directory\nTry \`ls ${args[0]}\` instead`;
+      return error(`cat: ${args[0]}: Is a directory\nTry \`ls ${args[0]}\` instead`);
     }
 
     const content = fileSystem.readFile(targetPath);
     if (content === null) {
-      return `cat: ${args[0]}: Permission denied`;
+      return error(`cat: ${args[0]}: Permission denied`);
     }
 
-    return content;
+    return text(content);
   }
 
-  private openFile(args: string[], currentPath: string, fileSystem: FileSystem): string {
+  private openFile(args: string[], currentPath: string, fileSystem: FileSystem): CommandResult {
     if (args.length === 0) {
-      return 'open: missing file operand\nTry \`open <filename>\` or \`ls\` to see available files';
+      return error('open: missing file operand\nTry `open <filename>` or `ls` to see available files');
     }
 
     const targetPath = fileSystem.normalizePath(currentPath, args[0]);
-    
-    if (!fileSystem.exists(targetPath)) {
-      return `open: ${args[0]}: No such file or directory`;
+    const node = fileSystem.getNode(targetPath);
+
+    if (!node) {
+      return error(`open: ${args[0]}: No such file or directory`);
     }
 
-    if (fileSystem.isDirectory(targetPath)) {
-      return `open: ${args[0]}: Is a directory\nTry \`ls ${args[0]}\` instead`;
+    if (node.type === 'directory') {
+      return error(`open: ${args[0]}: Is a directory\nTry \`ls ${args[0]}\` instead`);
     }
 
-    // Check if it's a PDF file
-    if (args[0].toLowerCase().endsWith('.pdf')) {
-      return `OPEN_PDF:${args[0]}`; // Special return value to trigger PDF modal
+    // A node that launches an app (e.g. resume.pdf -> resume modal).
+    if (node.app) {
+      return { kind: 'action', action: { kind: 'app', app: node.app } };
     }
 
-    // For non-PDF files, just read them normally
-    const content = fileSystem.readFile(targetPath);
-    if (content === null) {
-      return `open: ${args[0]}: Permission denied`;
+    if (node.type === 'file') {
+      return text(node.content ?? '');
     }
 
-    return content;
+    return error(`open: ${args[0]}: Permission denied`);
   }
 
-  private openExecutable(args: string[], currentPath: string, fileSystem: FileSystem): string {
-    if (args.length === 0) {
-      return './: is a directory\nTry \`./<filename>\` or \`ls\` to see available files';
+  private openExecutable(name: string, fileSystem: FileSystem): CommandResult {
+    if (!name) {
+      return error('./: is a directory\nTry `./<filename>` or `ls` to see available files');
     }
 
-    const executableName = args[0];
-    
-    // Check if it's a special executable in the registry
-    if (executableRegistry[executableName]) {
-      return executableRegistry[executableName];
+    // Executables live at the root, so `./mystery` works from any directory.
+    const node = fileSystem.getNode(`/${name}`);
+
+    if (!node) {
+      return error(`./: ${name}: No such file or directory`);
     }
 
-    const targetPath = fileSystem.normalizePath(currentPath, args[0]);
-    
-    if (!fileSystem.exists(targetPath)) {
-      return `./: ${executableName}: No such file or directory`;
+    if (node.type === 'directory') {
+      return error(`./: ${name}: Is a directory`);
     }
 
-    if (fileSystem.isDirectory(targetPath)) {
-      return `./: ${executableName}: Is a directory`;
+    if (node.app) {
+      return { kind: 'action', action: { kind: 'app', app: node.app } };
     }
 
-    // For regular files, just read the content
-    const content = fileSystem.readFile(targetPath);
-    if (content === null) {
-      return `./: ${executableName}: Permission denied`;
+    if (node.type === 'file') {
+      return text(node.content ?? '');
     }
 
-    return content;
+    return error(`./: ${name}: Permission denied`);
   }
 }

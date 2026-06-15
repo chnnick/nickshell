@@ -1,4 +1,4 @@
-import { Terminal } from './components/Terminal';
+import { Shell } from './components/Shell';
 
 function App() {
   const path = window.location.pathname.replace(/\/+$/, '') || '/';
@@ -17,7 +17,7 @@ function App() {
 
   return (
     <div className="min-h-screen bg-black text-green-400 font-mono overflow-hidden">
-      <Terminal />
+      <Shell />
     </div>
   );
 }
