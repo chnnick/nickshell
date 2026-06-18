@@ -1,10 +1,11 @@
 import { buildFsChildren } from '../sections/derive';
+import type { OutputSegment } from '../sections/derive';
 import type { AppId } from '../sections/view';
 
 export interface FileSystemNode {
   name: string;
   type: 'file' | 'directory' | 'realfile' | 'executable';
-  content?: string;
+  content?: string | OutputSegment[];
   children?: { [key: string]: FileSystemNode };
   /** For realfile/executable nodes: the app/modal this node launches. */
   app?: AppId;
@@ -49,12 +50,12 @@ export class FileSystem {
     return Object.keys(node.children);
   }
 
-  readFile(path: string): string | null {
+  readFile(path: string): string | OutputSegment[] | null {
     const node = this.getNode(path);
     if (!node || node.type !== 'file') {
       return null;
     }
-    return node.content || '';
+    return node.content ?? '';
   }
 
   isDirectory(path: string): boolean {

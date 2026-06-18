@@ -15,7 +15,7 @@ export type CommandResult =
   | { kind: 'cd'; path: string }
   | { kind: 'action'; action: AppAction };
 
-const text = (value: string): CommandResult => ({ kind: 'text', text: value });
+const text = (value: string | OutputSegment[]): CommandResult => ({ kind: 'text', text: value });
 const error = (value: string): CommandResult => ({ kind: 'text', text: value, isError: true });
 
 export class CommandProcessor {

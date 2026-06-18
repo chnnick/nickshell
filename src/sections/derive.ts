@@ -30,6 +30,10 @@ export interface OutputSegment {
   muted?: boolean;
   /** If set, render as a clickable button that runs this command. */
   command?: string;
+  /** If set, render as an inline image (URL with BASE_URL already prepended). */
+  image?: string;
+  /** Alt text for an image segment. */
+  alt?: string;
 }
 
 /** The accent + sidebar glyph for a filesystem path, from the manifest. */
