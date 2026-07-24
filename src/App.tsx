@@ -1,4 +1,5 @@
 import { Shell } from './components/Shell';
+import { resumeUrl } from './content';
 
 function App() {
   const path = window.location.pathname.replace(/\/+$/, '') || '/';
@@ -7,7 +8,7 @@ function App() {
     return (
       <div className="min-h-screen bg-black p-2">
         <iframe
-          src={`${import.meta.env.BASE_URL}Nick_Chen_Resume.pdf`}
+          src={resumeUrl}
           className="w-full h-[calc(100vh-1rem)] border-0 rounded"
           title="Nick Chen Resume PDF"
         />

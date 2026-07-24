@@ -1,4 +1,5 @@
 import React from 'react';
+import { resumeUrl } from '../content';
 
 interface ResumeModalProps {
   isOpen: boolean;
@@ -25,7 +26,7 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
         {/* Modal Content */}
         <div className="flex-1 overflow-hidden p-4">
           <iframe
-            src={`${import.meta.env.BASE_URL}Nick_Chen_Resume.pdf`}
+            src={resumeUrl}
             className="w-full h-full border-0 rounded"
             title="Nick Chen Resume PDF"
           />
