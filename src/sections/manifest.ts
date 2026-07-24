@@ -11,13 +11,17 @@ import { about, type About } from '../content/about';
 import { contact } from '../content/contact';
 import { experiences, type Experience } from '../content/experiences';
 import { projects, type Project } from '../content/projects';
+import type { OutputSegment } from './derive';
 import type { AppId } from './view';
+
+/** Resolve a public/ asset filename to a URL (mirrors content/gallery.ts). */
+const asset = (file: string) => `${import.meta.env.BASE_URL}${file}`;
 
 // ---------------------------------------------------------------------------
 // Text formatters — turn structured content into the plain text shown by `cat`.
 // ---------------------------------------------------------------------------
 
-export const aboutToText = (data: About): string => {
+export const aboutToText = (data: About): OutputSegment[] => {
   const lines: string[] = [];
   lines.push(`${data.greeting}`);
   lines.push('');
@@ -39,10 +43,13 @@ export const aboutToText = (data: About): string => {
   for (const c of contact) {
     lines.push(`  ${c.label}: ${c.display}`);
   }
-  return lines.join('\n');
+  return [
+    { text: '', image: asset(data.headshot), alt: `${data.name} headshot` },
+    { text: lines.join('\n') },
+  ];
 };
 
-export const experienceToText = (exp: Experience): string => {
+export const experienceToText = (exp: Experience): OutputSegment[] => {
   const lines: string[] = [];
   lines.push(`${exp.role} @ ${exp.company}`);
   lines.push(`${exp.startDate} - ${exp.endDate} | ${exp.location}`);
@@ -56,7 +63,10 @@ export const experienceToText = (exp: Experience): string => {
   if (exp.tools?.length) {
     lines.push(`Tools: ${exp.tools.join(', ')}`);
   }
-  return lines.join('\n');
+  const segs: OutputSegment[] = [];
+  if (exp.logo) segs.push({ text: '', image: asset(exp.logo), alt: `${exp.company} logo` });
+  segs.push({ text: lines.join('\n') });
+  return segs;
 };
 
 export const projectToText = (p: Project): string => {
@@ -106,14 +116,14 @@ interface SectionBase {
 /** A single `cat`-able text file (e.g. about-me.txt, contact). */
 export interface FileSection extends SectionBase {
   node: 'file';
-  toText: () => string;
+  toText: () => string | OutputSegment[];
 }
 
 /** One `cat`-able file inside a collection directory. */
 export interface CollectionItem {
   id: string;
   filename: string;
-  toText: () => string;
+  toText: () => string | OutputSegment[];
 }
 
 /** A directory of N `cat`-able items (experience, projects). */
@@ -127,7 +137,7 @@ export interface CollectionSection extends SectionBase {
 const collectionItems = <T>(
   arr: T[],
   id: (item: T) => string,
-  toText: (item: T) => string,
+  toText: (item: T) => string | OutputSegment[],
 ): CollectionItem[] =>
   arr.map((item) => ({ id: id(item), filename: `${id(item)}.txt`, toText: () => toText(item) }));
 

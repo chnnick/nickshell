@@ -19,6 +19,16 @@ const accentClass: Record<Accent, string> = {
 const renderSegments = (segments: OutputSegment[], onClickable: (cmd: string) => void) =>
   segments.map((seg, i) => {
     const color = seg.accent ? accentClass[seg.accent] : seg.muted ? 'text-gray-500' : undefined;
+    if (seg.image) {
+      return (
+        <img
+          key={i}
+          src={seg.image}
+          alt={seg.alt ?? ''}
+          className="block max-w-[160px] rounded my-2"
+        />
+      );
+    }
     if (seg.command) {
       const cmd = seg.command;
       return (
