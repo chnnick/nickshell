@@ -19,7 +19,7 @@ export const experiences: Experience[] = [
     startDate: 'Jul 2025',
     endDate: 'Dec 2025',
     location: 'Boston, MA',
-    logo: 'libertylogo.png',
+    logo: 'libertylogo.webp',
     bullets: [
       'Audit 17 enterprise cybersecurity policies across 4 SBUs for compliance',
       'Evaluate SDLC/DevOps security controls, and check IAM procedures using PowerBI, Aravo, Archer GRC',
@@ -44,7 +44,7 @@ export const experiences: Experience[] = [
     startDate: 'May 2025',
     endDate: 'Present',
     location: 'Boston, MA',
-    logo: 'c4clogo.jpg',
+    logo: 'c4clogo.webp',
     bullets: [
       'Built NestJS/PostgreSQL/TypeORM backend with TypeScript/React frontend',
       'Developed recruitment portal for 70+ members across 3+ subteams',
@@ -60,7 +60,7 @@ export const experiences: Experience[] = [
     startDate: 'Apr 2025',
     endDate: 'Present',
     location: 'Boston, MA',
-    logo: 'firstbytelogo.png',
+    logo: 'firstbytelogo.webp',
     bullets: [
       'Lead 5 subteams, partnerships with 2 Boston youth organizations',
       'Increased potential partners by 200%, recruited 20+ new members',

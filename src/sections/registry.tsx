@@ -3,8 +3,8 @@
 // by the logic layer — keeping React out of fileSystem.ts / commandProcessor.ts.
 //
 import type React from 'react';
-import { GalleryModal } from '../components/GalleryModal';
-import { ResumeModal } from '../components/ResumeModal';
+import { GalleryApp } from '../components/terminal/GalleryApp';
+import { ResumeModal } from '../components/terminal/ResumeModal';
 import type { AppId } from './view';
 
 export interface AppProps {
@@ -13,6 +13,6 @@ export interface AppProps {
 }
 
 export const appFor: Record<AppId, React.FC<AppProps>> = {
-  gallery: GalleryModal,
+  gallery: GalleryApp,
   resume: ResumeModal,
 };

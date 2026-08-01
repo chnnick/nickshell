@@ -1,3 +1,100 @@
+/* Self-hosted so first paint never waits on a third-party stylesheet.
+   Vite emits these as hashed woff2 assets; @fontsource sets font-display: swap. */
+@import '@fontsource/jetbrains-mono/latin-400.css';
+@import '@fontsource/jetbrains-mono/latin-500.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  /* Light "paper" palette. Strictly greyscale — no accent colour. */
+  :root {
+    --bg: #f6f6f5;
+    --fg: #18181b;
+    --muted: #71717a;
+    --rule: #e4e4e7;
+    --surface: #fbfbfa;
+    /* Pre-composited so the lightbox backdrop needs no alpha maths on a var. */
+    --overlay: rgb(246 246 245 / 0.96);
+  }
+
+  /* The terminal route keeps its dark green-on-black identity. Scoped to a
+     class rather than `body` so the two themes never fight over globals. */
+  .theme-terminal {
+    --bg: #000000;
+    --fg: #4ade80;
+    --muted: #6b7280;
+    --rule: #14532d;
+    --surface: #0a0a0a;
+    --overlay: rgb(0 0 0 / 0.92);
+  }
+
+  html {
+    background-color: var(--bg);
+    /* Reserve the scrollbar gutter so opening the lightbox can't shift layout. */
+    scrollbar-gutter: stable;
+  }
+
+  body {
+    background-color: var(--bg);
+    color: var(--fg);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Links are the text colour with a hairline underline; hover mutes them. */
+  a {
+    color: inherit;
+    text-decoration-line: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+    transition: color 120ms ease;
+  }
+
+  a:hover {
+    color: var(--muted);
+  }
+
+  /* Native <details> drives every disclosure on the page — zero JS, no
+     layout thrash, and it opens instantly. */
+  summary {
+    cursor: pointer;
+    list-style: none;
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  /* The +/- affordance (components/site/Section.tsx <Marker/>), driven entirely
+     by CSS so toggling never re-renders React. */
+  .disclosure::after {
+    content: '+';
+  }
+
+  details[open] > summary .disclosure::after {
+    content: '−';
+  }
+
+  summary:hover {
+    color: var(--muted);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--fg);
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}

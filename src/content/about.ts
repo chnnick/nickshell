@@ -26,7 +26,7 @@ export interface About {
 export const about: About = {
   name: 'Nick Chen',
   greeting: "Hey there! I'm Nick.",
-  headshot: 'headshot.png',
+  headshot: 'headshot-256.webp',
   blurb: [
     "I'm a Cybersecurity student at Northeastern University, graduating May 2027.",
     'I am passionate about offensive and defensive security, software development, and compliance, with experience in all three.',

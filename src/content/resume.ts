@@ -2,5 +2,6 @@
 // Update the resume by pushing a new PDF there — no changes needed here.
 const RESUME_BASE = 'https://chnnick.github.io/resume/resume.pdf';
 
-// Cache-buster: forces browsers/CDN to fetch the latest after a resume update.
-export const resumeUrl = `${RESUME_BASE}?t=${Date.now()}`;
+// Cache-buster. Bump this by hand after pushing a new PDF — it used to be
+// `Date.now()`, which busted the cache on every single page load.
+export const resumeUrl = `${RESUME_BASE}?v=2`;
