@@ -41,6 +41,10 @@ export const about: About = {
   },
   skills: [
     {
+      label: 'Certifications',
+      items: ['ISC2 Certified in Cybersecurity', 'CodePath Intermediate Cybersecurity'],
+    },
+    {
       label: 'Languages',
       items: ['Java', 'JavaScript', 'TypeScript', 'C', 'Python', 'Terraform', 'SQL', 'Bash'],
     },

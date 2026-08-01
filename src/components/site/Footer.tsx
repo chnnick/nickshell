@@ -16,8 +16,8 @@ export const Footer: React.FC = () => (
     </div>
 
     <p className="mt-3">
-      Built by Nick Chen. There's a{' '}
-      <a href="/terminal">terminal version</a> of this site too.
+      Built by Nick Chen. {' '}
+      <a href="/terminal">sh</a>
     </p>
   </footer>
 );
