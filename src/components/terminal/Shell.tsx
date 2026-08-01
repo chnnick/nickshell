@@ -1,16 +1,16 @@
 import React, { useCallback, useRef, useState } from 'react';
-import { contact } from '../content';
-import { welcomeMessage } from '../utils/textContent';
-import { CommandProcessor } from '../utils/commandProcessor';
-import { FileSystem } from '../utils/fileSystem';
+import { contact } from '../../content';
+import { welcomeMessage } from '../../utils/textContent';
+import { CommandProcessor } from '../../utils/commandProcessor';
+import { FileSystem } from '../../utils/fileSystem';
 import {
   TerminalPane,
   type TerminalLine,
   type TerminalPaneHandle,
-} from './layout/TerminalPane';
+} from './TerminalPane';
 import { AppHost } from './AppHost';
-import { promptSegments, runMessageForApp } from '../sections/derive';
-import type { AppId } from '../sections/view';
+import { promptSegments, runMessageForApp } from '../../sections/derive';
+import type { AppId } from '../../sections/view';
 
 const commandList = ['ls', 'cd', 'cat', 'open', 'pwd', 'clear', 'help'];
 
@@ -36,19 +36,17 @@ export const Shell: React.FC = () => {
     ]);
   }, []);
 
-  // Open an app/modal with a short cinematic launch sequence in the terminal.
+  // Print the launch lines and open the app in the same tick. The lines used to
+  // be staged 250ms apart, which meant ./mystery sat for ~1.2s doing nothing.
   const launchApp = useCallback((app: AppId) => {
     const lines = runMessageForApp(app);
-    if (lines.length === 0) {
-      setActiveApp(app);
-      return;
+    if (lines.length > 0) {
+      setHistory((prev) => [
+        ...prev,
+        ...lines.map((line): TerminalLine => ({ type: 'output', content: line })),
+      ]);
     }
-    lines.forEach((line, i) => {
-      window.setTimeout(() => {
-        setHistory((prev) => [...prev, { type: 'output', content: line }]);
-      }, i * 250);
-    });
-    window.setTimeout(() => setActiveApp(app), lines.length * 250 + 150);
+    setActiveApp(app);
   }, []);
 
   const runCommand = useCallback(
@@ -167,6 +165,10 @@ export const Shell: React.FC = () => {
       </main>
 
       <footer className="text-[10px] text-gray-500 text-center py-1 border-t border-green-500/10 font-mono">
+        <a href="/" className="hover:text-gray-300">
+          ← back to site
+        </a>
+        {' · '}
         Created by Nick Chen
         {contact.map((c) => (
           <React.Fragment key={c.kind}>

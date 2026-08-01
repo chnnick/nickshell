@@ -25,24 +25,28 @@ export interface About {
 
 export const about: About = {
   name: 'Nick Chen',
-  greeting: "Hey there! I'm Nick.",
-  headshot: 'headshot.png',
+  greeting: "Hi! I'm Nick.",
+  headshot: 'headshot-256.webp',
   blurb: [
     "I'm a Cybersecurity student at Northeastern University, graduating May 2027.",
-    'I am passionate about offensive and defensive security, software development, and compliance, with experience in all three.',
+    'I am passionate about offensive and defensive security, software development, and policy, with experience in each one!',
   ],
   education: {
     school: 'Northeastern University',
     degree: 'B.S. Cybersecurity',
     minor: 'Law & Public Policy',
-    gpa: '3.70',
+    gpa: '3.72',
     honors: ["Dean's List"],
     graduation: 'May 2027',
   },
   skills: [
     {
+      label: 'Certifications',
+      items: ['ISC2 Certified in Cybersecurity', 'CodePath Intermediate Cybersecurity'],
+    },
+    {
       label: 'Languages',
-      items: ['Java', 'JavaScript', 'TypeScript', 'C', 'Python', 'SQL', 'Go', 'Swift'],
+      items: ['Java', 'JavaScript', 'TypeScript', 'C', 'Python', 'Terraform', 'SQL', 'Bash'],
     },
     {
       label: 'Security',
@@ -62,22 +66,24 @@ export const about: About = {
       label: 'Tools/Frameworks',
       items: [
         'React',
+        'React Native',
         'NestJS',
         'NextJS',
+        'FastAPI',
         'AWS',
         'Supabase',
-        'PostgreSQL',
         'MongoDB',
       ],
     },
   ],
-  seeking: 'Seeking Summer 2026 & Fall 2026 opportunities!',
+  seeking: 'Seeking opportunities starting Summer 2027!',
   interests: [
-    'Teaching',
-    'Building',
-    'Reading philosophy',
-    'Playing guitar',
+    'The 1975',
+    'Youth Education',
+    'Philosophy',
+    'Classical Guitar',
     'Snowboarding',
-    'Ping pong',
+    'Ping Pong',
+    'Electronic Music'
   ],
 };

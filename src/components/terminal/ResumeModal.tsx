@@ -1,5 +1,5 @@
 import React from 'react';
-import { resumeUrl } from '../content';
+import { resumeUrl } from '../../content';
 
 interface ResumeModalProps {
   isOpen: boolean;

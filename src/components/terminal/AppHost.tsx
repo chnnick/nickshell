@@ -1,6 +1,6 @@
 import React from 'react';
-import { appFor } from '../sections/registry';
-import type { AppId } from '../sections/view';
+import { appFor } from '../../sections/registry';
+import type { AppId } from '../../sections/view';
 
 interface Props {
   activeApp: AppId | null;

@@ -4,25 +4,40 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        'mono': ['JetBrains Mono', 'Menlo', 'Monaco', 'Consolas', 'Liberation Mono', 'Courier New', 'monospace'],
+        mono: [
+          'JetBrains Mono',
+          'ui-monospace',
+          'SFMono-Regular',
+          'Menlo',
+          'Monaco',
+          'Consolas',
+          'Liberation Mono',
+          'Courier New',
+          'monospace',
+        ],
       },
+      // Semantic tokens backed by the CSS variables in index.css, so the same
+      // utilities serve both the light site and the dark terminal.
       colors: {
-        'terminal-bg': '#000000',
-        'terminal-text': '#00ff00',
-        'terminal-cyan': '#00ffff',
-        'terminal-yellow': '#ffff00',
-        'terminal-red': '#ff0000',
+        bg: 'var(--bg)',
+        fg: 'var(--fg)',
+        muted: 'var(--muted)',
+        rule: 'var(--rule)',
+        surface: 'var(--surface)',
+        overlay: 'var(--overlay)',
       },
-      animation: {
-        'pulse': 'pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-        'blink': 'blink 1s step-end infinite',
+      maxWidth: {
+        column: '560px',
       },
       keyframes: {
         blink: {
           '0%, 50%': { opacity: '1' },
           '51%, 100%': { opacity: '0' },
-        }
-      }
+        },
+      },
+      animation: {
+        blink: 'blink 1s step-end infinite',
+      },
     },
   },
   plugins: [],
