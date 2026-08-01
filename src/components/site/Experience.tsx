@@ -14,7 +14,8 @@ export const Experience: React.FC = () => (
           <summary className="flex items-baseline gap-x-4 py-1">
             <span className="w-12 shrink-0 text-[13px] text-muted">{endLabel(role)}</span>
             <span className="min-w-0 flex-1">
-              {role.role} <span className="text-muted">@ {role.company}</span>
+              <span className="block">{role.role}</span>
+              <span className="block text-muted">@ {role.company}</span>
             </span>
             <Marker />
           </summary>

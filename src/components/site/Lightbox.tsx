@@ -55,35 +55,47 @@ export const Lightbox: React.FC<Props> = ({ images, index, onClose, onIndexChang
         close ✕
       </button>
 
-      <img
-        // Keying on src drops the previous decoded frame instead of showing a
-        // stale image while the next one loads.
-        key={image.full}
-        src={image.full}
-        alt={image.description}
-        width={1000}
-        height={1000}
-        decoding="async"
-        className="max-h-[78vh] w-auto max-w-full object-contain"
-        onClick={(e) => e.stopPropagation()}
-      />
-
-      <div
-        className="flex items-center gap-4 text-[13px]"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <button onClick={() => go(-1)} aria-label="Previous photo" className="text-muted hover:text-fg">
+      {/* Arrows sit in the same row as the photo so they hug its edges and stay
+          put when the caption below reflows. */}
+      <div className="flex max-w-full items-center gap-1" onClick={(e) => e.stopPropagation()}>
+        <button
+          onClick={() => go(-1)}
+          aria-label="Previous photo"
+          className="shrink-0 px-3 py-6 text-[13px] text-muted hover:text-fg"
+        >
           ←
         </button>
-        <span>{image.description}</span>
-        <button onClick={() => go(1)} aria-label="Next photo" className="text-muted hover:text-fg">
+
+        <img
+          // Keying on src drops the previous decoded frame instead of showing a
+          // stale image while the next one loads.
+          key={image.full}
+          src={image.full}
+          alt={image.description}
+          width={1000}
+          height={1000}
+          decoding="async"
+          className="max-h-[78vh] min-w-0 w-auto max-w-full object-contain"
+        />
+
+        <button
+          onClick={() => go(1)}
+          aria-label="Next photo"
+          className="shrink-0 px-3 py-6 text-[13px] text-muted hover:text-fg"
+        >
           →
         </button>
       </div>
 
-      <p className="text-[13px] text-muted">
-        {index + 1} / {images.length}
-      </p>
+      <div
+        className="flex flex-col items-center gap-3 text-center"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <span className="text-[13px]">{image.description}</span>
+        <p className="text-[13px] text-muted">
+          {index + 1} / {images.length}
+        </p>
+      </div>
     </div>
   );
 };

@@ -14,7 +14,7 @@ export const Gallery: React.FC = () => {
   }, []);
 
   return (
-    <Section label="people, places, and such">
+    <Section label="outside work">
       <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
         {galleryImages.map((image, i) => (
           <button

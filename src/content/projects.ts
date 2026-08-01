@@ -15,7 +15,70 @@ export interface Project {
   awards?: string[];
 }
 
-export const projects: Project[] = [
+const MONTHS = [
+  'Jan',
+  'Feb',
+  'Mar',
+  'Apr',
+  'May',
+  'Jun',
+  'Jul',
+  'Aug',
+  'Sep',
+  'Oct',
+  'Nov',
+  'Dec',
+];
+
+/** Turns a "MMM YYYY" date into a sortable number. */
+const dateKey = (date: string): number => {
+  const [month, year] = date.split(' ');
+  return Number(year) * 12 + MONTHS.indexOf(month);
+};
+
+const allProjects: Project[] = [
+  {
+    id: 'cloudsight',
+    name: 'CloudSight',
+    tagline: 'AWS Misconfiguration Scanner',
+    date: 'Apr 2026',
+    description:
+      'Dockerized full-stack cloud security scanner that detects misconfigurations across EC2, S3, Lambda, and IAM.',
+    features: [
+      '8+ checks for AWS risks: IMDSv1 exposure, public S3 access, hardcoded Lambda secrets',
+      'Neo4j-backed interactive attack graph to visualize findings and blast radius',
+      'Validated against isolated CloudGoat AWS test scenarios',
+      'Terraform-provisioned test environment with boto3 collection layer',
+    ],
+    tech: ['FastAPI', 'React', 'Neo4j', 'Docker', 'boto3', 'Terraform'],
+    links: [
+      {
+        label: 'GitHub',
+        url: 'https://github.com/chnnick/AWS-Misconfiguration-Scanner',
+      },
+    ],
+  },
+  {
+    id: 'flock',
+    name: 'flock',
+    tagline: 'Shared Commute Connector',
+    date: 'Feb 2026',
+    description:
+      'Mobile app for coordinating shared commutes, built at HackBeanPot with end-to-end authentication.',
+    features: [
+      'Led design and implementation of end-to-end auth for the mobile app',
+      'Auth0 SDK in React Native with JWT validation enforced on FastAPI endpoints',
+      'Google OAuth sign-in integration',
+      'Auth0 Management API for full account deletion cascading across MongoDB',
+      'API deployed on Railway',
+    ],
+    tech: ['FastAPI', 'React Native', 'MongoDB', 'Auth0', 'Railway'],
+    links: [
+      { label: 'DevPost', url: 'https://devpost.com/software/flock-b6vmnp' },
+      { label: 'GitHub', url: 'https://github.com/chnnick/flock' },
+    ],
+    awards: ['MLH Best Use of Auth0 at HackBeanPot'],
+  },
   {
     id: 'dream-store',
     name: 'DreamStore',
@@ -30,7 +93,14 @@ export const projects: Project[] = [
       'Real-time stock validation',
       'Secure image management',
     ],
-    tech: ['React', 'TypeScript', 'NextJS', 'Supabase', 'Stripe API', 'Zustand'],
+    tech: [
+      'React',
+      'TypeScript',
+      'NextJS',
+      'Supabase',
+      'Stripe API',
+      'Zustand',
+    ],
     links: [{ label: 'GitHub', url: 'https://github.com/chnnick/dreamstore' }],
   },
   {
@@ -57,11 +127,13 @@ export const projects: Project[] = [
     ],
     links: [
       { label: 'throwapin.com', url: 'https://throwapin.com' },
-      { label: 'GitHub', url: 'https://github.com/NoHaxsJustAsian/throw-a-pin' },
+      {
+        label: 'GitHub',
+        url: 'https://github.com/NoHaxsJustAsian/throw-a-pin',
+      },
     ],
     awards: [
-      'Honorable Mention for Best Overall Project at HackBeanPot',
-      'Won against 100+ contestants at a 36-hour hackathon (and won a mug!)',
+      'Honorable Mention for Best Overall Project at HackBeanPot (Got a mug)',
     ],
   },
   {
@@ -78,7 +150,9 @@ export const projects: Project[] = [
       'Input validation and error handling',
     ],
     tech: ['Python', 'Cryptography', 'CLI Design'],
-    links: [{ label: 'GitHub', url: 'https://github.com/chnnick/cipher-maker' }],
+    links: [
+      { label: 'GitHub', url: 'https://github.com/chnnick/cipher-maker' },
+    ],
   },
   {
     id: 'mini-shell',
@@ -116,3 +190,8 @@ export const projects: Project[] = [
     links: [{ label: 'GitHub', url: 'https://github.com/chnnick/scrambler' }],
   },
 ];
+
+/** Ordered by date alone, most recent first. */
+export const projects: Project[] = [...allProjects].sort(
+  (a, b) => dateKey(b.date) - dateKey(a.date),
+);
