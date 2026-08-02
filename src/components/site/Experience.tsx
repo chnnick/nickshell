@@ -11,7 +11,7 @@ export const Experience: React.FC = () => (
     <div className="space-y-1">
       {experiences.map((role) => (
         <details key={role.id} className="group">
-          <summary className="flex items-baseline gap-x-4 py-1">
+          <summary className="flex items-baseline gap-x-4 py-0.5 leading-snug">
             <span className="w-12 shrink-0 text-[13px] text-muted">{endLabel(role)}</span>
             <span className="min-w-0 flex-1">
               <span className="block">{role.role}</span>

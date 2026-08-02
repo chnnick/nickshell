@@ -28,8 +28,7 @@ export const about: About = {
   greeting: "Hi! I'm Nick.",
   headshot: 'headshot-256.webp',
   blurb: [
-    "I'm a Cybersecurity student at Northeastern University, graduating May 2027.",
-    'I am passionate about offensive and defensive security, software development, and policy, with experience in each one!',
+    "I am a student at Northeastern University, majoring in Cybersecurity with a minor in Law & Public Policy. I am passionate about offensive and defensive cybersecurity, software development, and exploring the impact of technology on our lives. I love to learn and teach!"
   ],
   education: {
     school: 'Northeastern University',

@@ -29,4 +29,7 @@ export const galleryImages: GalleryImage[] = [
   photo(10, 'osaka', 'Osaka, Japan'),
   photo(11, 'kyoto', 'Kyoto, Japan'),
   photo(12, 'tokyo', 'Tokyo, Japan'),
+  photo(13, 'kokohead', 'Koko Head, HI'),
+  photo(14, 'halfdome', 'Half Dome, Yosemite, CA'),
+  photo(15, 'diamondhead', 'Diamond Head, HI'),
 ];
