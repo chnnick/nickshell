@@ -4,6 +4,7 @@ import { Experience } from '../components/site/Experience';
 import { Footer } from '../components/site/Footer';
 import { Gallery } from '../components/site/Gallery';
 import { Header } from '../components/site/Header';
+import { Music } from '../components/site/Music';
 import { Projects } from '../components/site/Projects';
 
 /**
@@ -16,6 +17,7 @@ export const Home: React.FC = () => (
     <About />
     <Experience />
     <Projects />
+    <Music />
     <Gallery />
     <Footer />
   </div>

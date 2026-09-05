@@ -3,6 +3,12 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [ main ]
+  # Rebuild daily so the Spotify section stays current without a commit. Note
+  # GitHub disables cron workflows after 60 days of repository inactivity.
+  schedule:
+    - cron: '0 8 * * *'
+  # Manual refresh, e.g. after rotating the Spotify secrets.
+  workflow_dispatch:
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
@@ -33,6 +39,15 @@ jobs:
     - name: Install dependencies
       run: npm ci
       
+    # Rewrites src/content/spotify.generated.ts in the workspace only; the
+    # committed snapshot is the fallback if Spotify is briefly unreachable.
+    - name: Fetch Spotify top items
+      run: node scripts/fetch-spotify.mjs
+      env:
+        SPOTIFY_CLIENT_ID: ${{ secrets.SPOTIFY_CLIENT_ID }}
+        SPOTIFY_CLIENT_SECRET: ${{ secrets.SPOTIFY_CLIENT_SECRET }}
+        SPOTIFY_REFRESH_TOKEN: ${{ secrets.SPOTIFY_REFRESH_TOKEN }}
+
     - name: Build
       run: npm run build
 
