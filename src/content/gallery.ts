@@ -32,4 +32,5 @@ export const galleryImages: GalleryImage[] = [
   photo(13, 'kokohead', 'Koko Head, HI'),
   photo(14, 'halfdome', 'Half Dome, Yosemite, CA'),
   photo(15, 'diamondhead', 'Diamond Head, HI'),
+  photo(16, 'goldengatebridge', 'Golden Gate Bridge, San Francisco, CA'),
 ];
